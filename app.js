@@ -6,6 +6,7 @@ const weatherImages = document.querySelectorAll(".weather-day-container .weather
 const minTemps = document.querySelectorAll(".weather-day-container .min-temp");
 const maxTemps = document.querySelectorAll(".weather-day-container .max-temp");
 const windSpeeds = document.querySelectorAll(".weather-day-container .wind-speed");
+const lureImageContainer = document.querySelectorAll(".lure-image-container");
 
 
 var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -45,10 +46,36 @@ async function fetchWeather(lat, lon) {
             minTemps[i].innerHTML = `Min: ${Math.round(temperature_2m_min[i])}°C`;
             maxTemps[i].innerHTML = `Max: ${Math.round(temperature_2m_max[i])}°C`;
             windSpeeds[i].innerHTML = `Wind: ${Math.round(wind_speed_10m_max[i])} m/s`;
-            likelihood[i].innerHTML = `Fishing score: ${calculateLikelihood(weather_code[i], wind_speed_10m_max[i], wind_direction_10m_dominant[i])}`;
+            likelihood[i].innerHTML = `Fishing score: ${calculateLikelihood(weather_code[i], wind_speed_10m_max[i], wind_direction_10m_dominant[i])}%`;
+
+            console.log(chooseLureColor(weather_code[i]));
+            console.log("weather code " + weather_code[i]);
+            // Choose lure colors based on weather code
+            const lureColors = chooseLureColor(weather_code[i]);
+            // Clear previous images in the lure image container
+            lureImageContainer[i].innerHTML = "";
+            // Append lure images to the lure image container
+            lureColors.forEach(color => {
+                const img = document.createElement("img");
+                img.src = `./images/lures/${color}.png`;
+                img.alt = color;
+                lureImageContainer[i].appendChild(img);
+            });
         }
     } catch (err) {
         console.log("Error getting weather information");
+    }
+}
+
+/* Lure colors */
+
+function chooseLureColor(weatherCondition) {
+    if (weatherCondition > 1 && weatherCondition < 55) { // Cloudy
+        return ["Gold", "Black", "Firetiger"];
+    } else if (weatherCondition <= 1) { // Sunny
+        return ["Silver", "GreenSilver", "Natural"];
+    } else {
+        return ["Black", "Orange", "Red"];
     }
 }
 
@@ -56,9 +83,9 @@ async function fetchWeather(lat, lon) {
 /* Calculations */
 
 function calculateWeatherScore(weatherCondition) {
-    if (weatherCondition > 1 && weatherCondition < 55) {
+    if (weatherCondition > 1 && weatherCondition < 55) { // Cloudy
         return 100;
-    } else if (weatherCondition < 2) {
+    } else if (weatherCondition <= 1) { // Sunny
         return 75;
     } else {
         return 50;
@@ -109,8 +136,8 @@ function calculateLikelihood(weatherCondition, windSpeedMs, windDirection) {
 
 /* 
 ---- Todo ---- 
+- Fishing score colors: > 85% = Green - 70-85% = Orange - < 70% Red
 - Better error messages, innerHTML perhaps 
-- Lure of the day information
 - Placeholder images for weather
 - Better fonts
 - Loops eventually? 
