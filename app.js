@@ -43,7 +43,6 @@ async function fetchWeather(lat, lon) {
             const { weather_code, wind_speed_10m_max, wind_direction_10m_dominant, temperature_2m_min, temperature_2m_max } = respJson.daily;
             const fishingScore = calculateLikelihood(weather_code[i], wind_speed_10m_max[i], wind_direction_10m_dominant[i]);
             const scoreColor = calculateFishingScoreColor(fishingScore);
-            console.log(scoreColor);
 
             weatherImages[i].src = weatherCodes[weather_code[i]].image;
             minTemps[i].innerHTML = `Min: ${Math.round(temperature_2m_min[i])}°C`;
@@ -51,8 +50,6 @@ async function fetchWeather(lat, lon) {
             windSpeeds[i].innerHTML = `Wind: ${Math.round(wind_speed_10m_max[i])} m/s`;
             likelihood[i].innerHTML = `Fishing score: <span style="color:${scoreColor}">${fishingScore}%</span>`;
 
-            console.log(chooseLureColor(weather_code[i]));
-            console.log("weather code " + weather_code[i]);
             // Choose lure colors based on weather code
             const lureColors = chooseLureColor(weather_code[i]);
             // Clear previous images in the lure image container
