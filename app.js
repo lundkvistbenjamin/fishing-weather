@@ -6,7 +6,7 @@ const weatherImages = document.querySelectorAll(".weather-day-container .weather
 const minTemps = document.querySelectorAll(".weather-day-container .min-temp");
 const maxTemps = document.querySelectorAll(".weather-day-container .max-temp");
 const windSpeeds = document.querySelectorAll(".weather-day-container .wind-speed");
-const lureImageContainer = document.querySelectorAll(".lure-image-container");
+const lureImageContainer = document.querySelectorAll(".lure-img-container");
 
 
 var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -41,12 +41,15 @@ async function fetchWeather(lat, lon) {
         // Update weather images and temperatures
         for (let i = 0; i < weatherImages.length; i++) {
             const { weather_code, wind_speed_10m_max, wind_direction_10m_dominant, temperature_2m_min, temperature_2m_max } = respJson.daily;
+            const fishingScore = calculateLikelihood(weather_code[i], wind_speed_10m_max[i], wind_direction_10m_dominant[i]);
+            const scoreColor = calculateFishingScoreColor(fishingScore);
+            console.log(scoreColor);
 
             weatherImages[i].src = weatherCodes[weather_code[i]].image;
             minTemps[i].innerHTML = `Min: ${Math.round(temperature_2m_min[i])}°C`;
             maxTemps[i].innerHTML = `Max: ${Math.round(temperature_2m_max[i])}°C`;
             windSpeeds[i].innerHTML = `Wind: ${Math.round(wind_speed_10m_max[i])} m/s`;
-            likelihood[i].innerHTML = `Fishing score: ${calculateLikelihood(weather_code[i], wind_speed_10m_max[i], wind_direction_10m_dominant[i])}%`;
+            likelihood[i].innerHTML = `Fishing score: <span style="color:${scoreColor}">${fishingScore}%</span>`;
 
             console.log(chooseLureColor(weather_code[i]));
             console.log("weather code " + weather_code[i]);
@@ -133,14 +136,24 @@ function calculateLikelihood(weatherCondition, windSpeedMs, windDirection) {
     return Math.round(overallLikelihood); // Round to nearest whole number
 }
 
+// Change Fishing Score color based on number
+function calculateFishingScoreColor(fishingScore) {
+    if (fishingScore > 84) {
+        return "green";
+    } else if (fishingScore >= 60 && fishingScore <= 84) {
+        return "orange";
+    } else {
+        return "red";
+    }
+}
+
 
 /* 
 ---- Todo ---- 
-- Fishing score colors: > 85% = Green - 70-85% = Orange - < 70% Red
 - Better error messages, innerHTML perhaps 
 - Placeholder images for weather
 - Better fonts
-- Loops eventually? 
+- Loops eventually? (HTML)
 - Download your own weather image pack? 
 - 
 - 

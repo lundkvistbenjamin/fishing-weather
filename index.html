@@ -10,41 +10,77 @@
 
     <body>
 
-        <h1>Fishing Weather</h1>
+        <header>
+            <h1>Fishing Weather</h1>
+        </header>
 
         <div id="weather-cards" class="widget">
 
             <div class="weather-day-container">
                 <h3 class="day-of-week"></h3>
-                <img src="" class="weather-img" alt="weather icon">
-                <p class="min-temp"></p>
-                <p class="max-temp"></p>
-                <p class="wind-speed"></p>
-                <p class="likelihood"></p>
-                <div class="lure-image-container"></div>
+                <div class="weather-img-container">
+                    <img src="" class="weather-img" alt="weather icon">
+                </div>
+                <div class="weather-details-container">
+                    <p class="min-temp"></p>
+                    <p class="max-temp"></p>
+                    <p class="wind-speed"></p>
+                    <p class="likelihood"></p>
+                </div>
+                <h4>Lure Suggestions:</h4>
+                <div class="lure-img-container"></div>
             </div>
 
             <div class="weather-day-container">
                 <h3 class="day-of-week"></h3>
-                <img src="" class="weather-img" alt="weather icon">
-                <p class="min-temp"></p>
-                <p class="max-temp"></p>
-                <p class="wind-speed"></p>
-                <p class="likelihood"></p>
-                <div class="lure-image-container"></div>
+                <div class="weather-img-container">
+                    <img src="" class="weather-img" alt="weather icon">
+                </div>
+                <div class="weather-details-container">
+                    <p class="min-temp"></p>
+                    <p class="max-temp"></p>
+                    <p class="wind-speed"></p>
+                    <p class="likelihood"></p>
+                </div>
+                <h4>Lure Suggestions:</h4>
+                <div class="lure-img-container"></div>
             </div>
 
             <div class="weather-day-container">
                 <h3 class="day-of-week"></h3>
-                <img src="" class="weather-img" alt="weather icon">
-                <p class="min-temp"></p>
-                <p class="max-temp"></p>
-                <p class="wind-speed"></p>
-                <p class="likelihood"></p>
-                <div class="lure-image-container"></div>
+                <div class="weather-img-container">
+                    <img src="" class="weather-img" alt="weather icon">
+                </div>
+                <div class="weather-details-container">
+                    <p class="min-temp"></p>
+                    <p class="max-temp"></p>
+                    <p class="wind-speed"></p>
+                    <p class="likelihood"></p>
+                </div>
+                <h4>Lure Suggestions:</h4>
+                <div class="lure-img-container"></div>
             </div>
 
         </div>
+
+        <div>
+            <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                    <path id="gentle-wave"
+                        d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                </defs>
+                <g class="parallax">
+                    <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(240,240,255,0.7" />
+                    <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(240,240,255,0.5)" />
+                    <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(240,240,255,0.3)" />
+                </g>
+            </svg>
+        </div>
+
+        <footer>
+            <p>May your lines be tight and your weather always right - <span>Benjamin Lundkvist</span></p>
+        </footer>
 
         <script src="app.js" type="module"></script>
 
