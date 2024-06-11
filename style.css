@@ -122,12 +122,15 @@ footer span {
     }
 
     h1 {
-        font-size: 35px;
+        font-size: 30px;
     }
 
     #weather-cards {
         display: block;
-        margin: 10px 30px 20px 30px;
+    }
+
+    .weather-day-container {
+        margin: 20px;
     }
 
     .lure-img-container img {
