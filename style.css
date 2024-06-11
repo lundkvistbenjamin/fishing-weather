@@ -1,14 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 body {
     background: rgba(169, 214, 229, 1);
     background: linear-gradient(0deg, rgba(169, 214, 229, 1) 0%, rgba(1, 79, 134, 1) 100%);
     background-attachment: fixed;
+    font-family: "Roboto", sans-serif;
     color: #111D13;
     margin: 0px;
 }
 
 h1 {
     text-align: center;
-    color: white;
+    color: #d1e2ec;
     font-size: 45px;
     margin-top: 30px;
 }
@@ -19,7 +22,7 @@ h1 {
 }
 
 .weather-day-container {
-    background-color: #A9D6E5;
+    background-color: #d1e2ec;
     box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
     margin: 30px 10px 10px 10px;
@@ -57,7 +60,6 @@ h1 {
 
 
 /* Wave */
-
 .waves {
     position: absolute;
     bottom: 0;
@@ -68,7 +70,6 @@ h1 {
 }
 
 /* Animation */
-
 .parallax>use {
     animation: move-forever 25s cubic-bezier(.55, .5, .45, .5) infinite;
 }
@@ -102,8 +103,6 @@ footer p {
 footer span {
     font-weight: bold;
 }
-
-
 
 @keyframes move-forever {
     0% {
