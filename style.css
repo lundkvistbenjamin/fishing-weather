@@ -13,12 +13,13 @@ h1 {
     text-align: center;
     color: #d1e2ec;
     font-size: 45px;
-    margin-top: 30px;
+    margin-top: 80px;
 }
 
 #weather-cards {
     display: flex;
     justify-content: center;
+    margin-top: 120px;
 }
 
 .weather-day-container {
@@ -100,10 +101,6 @@ footer p {
     margin: 0px 0px 5px 0px;
 }
 
-footer span {
-    font-weight: bold;
-}
-
 @keyframes move-forever {
     0% {
         transform: translate3d(-90px, 0, 0);
@@ -123,10 +120,12 @@ footer span {
 
     h1 {
         font-size: 30px;
+        margin-top: 20px;
     }
 
     #weather-cards {
         display: block;
+        margin-top: 20px;
     }
 
     .weather-day-container {
