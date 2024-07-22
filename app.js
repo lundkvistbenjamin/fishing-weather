@@ -101,9 +101,9 @@ function getWindDirection(windDirection) {
 /* Calculations */
 
 function calculateWeatherScore(weatherCondition) {
-    if (weatherCondition > 1 && weatherCondition <= 57) { // Cloudy or drizzle
+    if (weatherCondition > 1 && weatherCondition <= 57) { // Cloudy, drizzle
         return 100;
-    } else if (weatherCondition <= 1 || weatherCondition == 61 || (weatherCondition >= 80 && weatherCondition <= 86)) { // Sunny, light rain or rain/snow showers
+    } else if (weatherCondition <= 1 || weatherCondition == 61 || (weatherCondition >= 80 && weatherCondition <= 86)) { // Sunny, light rain, rain/snow showers
         return 75;
     } else {
         return 50;
