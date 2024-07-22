@@ -41,17 +41,21 @@ async function fetchWeather(lat, lon) {
         // Update weather images and temperatures
         for (let i = 0; i < weatherImages.length; i++) {
             const { weather_code, wind_speed_10m_max, wind_direction_10m_dominant, temperature_2m_min, temperature_2m_max } = respJson.daily;
-            const fishingScore = calculateLikelihood(weather_code[i], wind_speed_10m_max[i], wind_direction_10m_dominant[i]);
+            const fishingScore = calculateFishingScore(weather_code[i], wind_speed_10m_max[i], wind_direction_10m_dominant[i]);
+
             const scoreColor = calculateFishingScoreColor(fishingScore);
+
+            // Get wind direction
+            const windDirection = getWindDirection(wind_direction_10m_dominant[i]);
 
             weatherImages[i].src = weatherCodes[weather_code[i]].image;
             minTemps[i].innerHTML = `Min: ${Math.round(temperature_2m_min[i])}°C`;
             maxTemps[i].innerHTML = `Max: ${Math.round(temperature_2m_max[i])}°C`;
-            windSpeeds[i].innerHTML = `Wind: ${Math.round(wind_speed_10m_max[i])} m/s`;
+            windSpeeds[i].innerHTML = `${windDirection} wind: ${Math.round(wind_speed_10m_max[i])} m/s`;
             likelihood[i].innerHTML = `Fishing score: <span style="color:${scoreColor}">${fishingScore}%</span>`;
 
-            // Choose lure colors based on weather code
-            const lureColors = chooseLureColor(weather_code[i]);
+            // Get lure colors
+            const lureColors = getLureColor(weather_code[i]);
             // Clear previous images in the lure image container
             lureImageContainer[i].innerHTML = "";
             // Append lure images to the lure image container
@@ -61,6 +65,7 @@ async function fetchWeather(lat, lon) {
                 img.alt = color;
                 lureImageContainer[i].appendChild(img);
             });
+
         }
     } catch (err) {
         console.log("Error getting weather information");
@@ -69,8 +74,8 @@ async function fetchWeather(lat, lon) {
 
 /* Lure colors */
 
-function chooseLureColor(weatherCondition) {
-    if (weatherCondition > 1 && weatherCondition < 55) { // Cloudy
+function getLureColor(weatherCondition) {
+    if (weatherCondition > 1 && weatherCondition < 55) { // Cloudy or light drizzle
         return ["Gold", "Black", "Firetiger"];
     } else if (weatherCondition <= 1) { // Sunny
         return ["Silver", "GreenSilver", "Natural"];
@@ -79,13 +84,26 @@ function chooseLureColor(weatherCondition) {
     }
 }
 
+/* Wind direction */
+
+function getWindDirection(windDirection) {
+    const directions = [
+        "North", "Northeast", "East", "Southeast",
+        "South", "Southwest", "West", "Northwest"
+    ];
+    // Each direction represents 45 degrees
+    const segmentSize = 360 / directions.length;
+    // Calculate the index of the direction
+    const index = Math.floor((windDirection + segmentSize / 2) / segmentSize) % directions.length;
+    return directions[index];
+}
 
 /* Calculations */
 
 function calculateWeatherScore(weatherCondition) {
-    if (weatherCondition > 1 && weatherCondition < 55) { // Cloudy
+    if (weatherCondition > 1 && weatherCondition < 55) { // Cloudy or light drizzle
         return 100;
-    } else if (weatherCondition <= 1) { // Sunny
+    } else if (weatherCondition <= 1 || weatherCondition == 80 || weatherCondition == 81) { // Sunny or light drizzle
         return 75;
     } else {
         return 50;
@@ -93,26 +111,29 @@ function calculateWeatherScore(weatherCondition) {
 }
 
 function calculateWindScore(windSpeed) {
-    if (windSpeed < 4) {
+    if (windSpeed < 8) {
         return 100;
-    } else if (windSpeed >= 4 && windSpeed < 6) {
+    } else if (windSpeed >= 8 && windSpeed < 12) {
         return 75;
     } else {
         return 50;
     }
 }
 
-function calculateWindDirectionScore(windDirection) {
-    if (windDirection > 130 && windDirection < 250) {
-        return 100; // Wind coming from south or southwest
-    } else if (windDirection > 310 || windDirection < 50) {
-        return 50;  // Wind coming from north
-    } else {
+function calculateWindDirectionScore(windDirectionString) {
+    if (windDirectionString == "Southwest" || windDirectionString == "West" || windDirectionString == "South") {
+        return 100;
+    } else if (windDirectionString == "Northwest" || windDirectionString == "Southeast" || windDirectionString == "East") {
         return 75;
+    } else {
+        return 50;
     }
+
 }
 
-function calculateLikelihood(weatherCondition, windSpeedMs, windDirection) {
+/* Calculate Fishing Score based on conditions */
+
+function calculateFishingScore(weatherCondition, windSpeedMs, windDirection) {
     // Define weights for each parameter
     const weights = {
         weather: 0.3,
@@ -120,10 +141,12 @@ function calculateLikelihood(weatherCondition, windSpeedMs, windDirection) {
         windDirection: 0.4
     };
 
+    const windDirectionString = getWindDirection(windDirection);
+
     // Calculate scores for each parameter
     const weatherScore = calculateWeatherScore(weatherCondition);
     const windSpeedScore = calculateWindScore(windSpeedMs);
-    const windDirectionScore = calculateWindDirectionScore(windDirection);
+    const windDirectionScore = calculateWindDirectionScore(windDirectionString);
 
     // Calculate overall likelihood percentage
     const overallLikelihood = (weights.weather * weatherScore)
