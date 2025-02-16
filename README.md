@@ -1,5 +1,5 @@
 # Fishing Weather  
-[Live Demo](https://lundkvistbenjamin.github.io/Fishing-Weather/)  
+[Live Demo](https://lundkvistbenjamin.github.io/fishing-weather/)  
 
 A web app that tells you if the weather is good for fishing and provides recommendations on lures.  
 
