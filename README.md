@@ -1,12 +1,14 @@
-# Fishing Weather
-A web app that tells you if the weather is good for fishing and provides recommendations on lures.
+# Fishing Weather  
+[Live Demo](https://lundkvistbenjamin.github.io/Fishing-Weather/)  
 
-## Features
-- Weather forecast for fishing
-- Lure recommendations based on weather conditions
+A web app that tells you if the weather is good for fishing and provides recommendations on lures.  
 
-## Installation
-Clone the repository and run the app locally.
+## Features  
+- Weather forecast for fishing  
+- Lure recommendations based on weather conditions  
+
+## Installation  
+Clone the repository and run the app locally.  
 
 ```bash
 git clone https://github.com/lundkvistbenjamin/fishing-weather.git
