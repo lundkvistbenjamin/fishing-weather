@@ -12,6 +12,7 @@ Clone the repository and run the app locally.
 
 ```bash
 git clone https://github.com/lundkvistbenjamin/fishing-weather.git
+```
 
 ## **License**  
 MIT License  
